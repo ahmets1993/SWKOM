@@ -12,44 +12,44 @@ import java.util.Optional;
 @Service
 public class CustomerService {
 
-    private final CustomerRepository usersRepository;
+    private final CustomerRepository customerRepository;
 
     @Autowired
     public CustomerService(CustomerRepository usersRepository) {
-        this.usersRepository = usersRepository;
+        this.customerRepository = usersRepository;
     }
 
     public List<Customer> getCustomer(){
-        return usersRepository.findAll();
+        return customerRepository.findAll();
     }
 
     public void addNewUser(Customer user) {
 
         Optional<Customer> usersOptional=
-            usersRepository.findCustomerByID(user.getUsername());
+                customerRepository.findCustomerByID(user.getUsername());
         if(usersOptional.isPresent()){
             throw new IllegalStateException("This username has been taken.");
         }else {
-            usersRepository.save(user);
+            customerRepository.save(user);
             System.out.println(user);
         }
 
 
     }
 
-    public void deleteUser(Long userID) {
-        boolean exist = usersRepository.existsById(userID);
+    public void deleteUser(Long customerID) {
+        boolean exist = customerRepository.existsById(customerID);
         if(!exist){
-            throw new IllegalStateException("User with id " + userID +" does not exist.");
+            throw new IllegalStateException("User with id " + customerID +" does not exist.");
         }
         else{
-            usersRepository.deleteById(userID);
+            customerRepository.deleteById(customerID);
         }
 
     }
     @Transactional
     public void updateUser(Long userID, String username, String name, String surname, String email, String password) {
-        Customer user = usersRepository.findById(userID).orElseThrow(() -> new IllegalStateException("User with " + userID + "does not exist"));
+        Customer user = customerRepository.findById(userID).orElseThrow(() -> new IllegalStateException("User with " + userID + "does not exist"));
 
         if(username != null  && username.length() > 0 && !Objects.equals(user.getUsername(), username)){
             user.setUsername(username);

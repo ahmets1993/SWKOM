@@ -29,7 +29,8 @@ public class CustomerController {
     public void registerUser(@RequestBody Customer customer){
         userService.addNewUser(customer);
     }
-    @DeleteMapping(path = "{userID}")
+
+    @DeleteMapping(path = "{customerID}")
     public  void deleteUser(@PathVariable("customerID") Long customerId){
         userService.deleteUser(customerId);
     }
