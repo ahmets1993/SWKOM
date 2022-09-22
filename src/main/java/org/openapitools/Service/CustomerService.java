@@ -45,7 +45,6 @@ public class CustomerService {
         else{
             customerRepository.deleteById(customerID);
         }
-
     }
     @Transactional
     public void updateUser(Long userID, String username, String name, String surname, String email, String password) {
